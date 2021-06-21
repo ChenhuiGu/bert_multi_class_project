@@ -1,4 +1,4 @@
-import torch
+
 from simpletransformers.classification import ClassificationModel, ClassificationArgs
 from config import num_train_epochs, learning_rate, train_batch_size, \
     eval_batch_size, max_seq_length, output_path
@@ -16,7 +16,7 @@ class BertmultiClass():
                                              max_seq_length=max_seq_length,
                                              output_dir=output_path
                                              )
-        self.cuda_available = torch.cuda.is_available()
+        # self.cuda_available = torch.cuda.is_available()
 
     def train(self):
         df = loan_usage_example()
@@ -28,7 +28,8 @@ class BertmultiClass():
             'hfl/chinese-bert-wwm-ext',
             num_labels=len(label_map),
             args=self.model_args,
-            use_cuda=self.cuda_available
+            # use_cuda=self.cuda_available
+            use_cuda=True
         )
         # Train the model
         model.train_model(train_df)
@@ -44,7 +45,8 @@ class BertmultiClass():
             f'{output_path}/best_mode',
             num_labels=len(label_map),
             args=self.model_args,
-            use_cuda=self.cuda_available
+            # use_cuda=self.cuda_available
+            use_cuda=True
         )
         # Make predictions with the model
         predictions, raw_outputs = model.predict([text])
